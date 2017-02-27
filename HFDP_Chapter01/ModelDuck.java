@@ -1,9 +1,5 @@
 package DuckCode;
 
-/**
- *
- * @author jvall
- */
 public class ModelDuck extends Duck {
     
     public ModelDuck() {
