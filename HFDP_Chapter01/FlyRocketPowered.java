@@ -1,9 +1,5 @@
 package DuckCode;
 
-/**
- *
- * @author Johnathon Valles
- */
 public class FlyRocketPowered implements FlyBehavior {
     
     @Override
