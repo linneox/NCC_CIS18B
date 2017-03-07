@@ -169,7 +169,7 @@ public class PizzaPOS {
             return pizza;
 
         }
-        return pizzaCrust; // If all fails. returns original reference, not wrapped. 
+        return pizzaCrust; // If all fails, returns original reference, not wrapped. 
     }
 
     public static Pizza createTopping(char choice, Pizza pizza) {
