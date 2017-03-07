@@ -15,7 +15,7 @@ public class Olives extends Toppings {
 
     @Override
     public String getDescription() {
-        return pizzaWrap.getDescription() + "Olives $" + COST + "\n";
+        return pizzaWrap.getDescription() + "Olives \t\t\t$" + Double.toString(COST).format("%.2f", COST) + "\n";
     }
 
     @Override

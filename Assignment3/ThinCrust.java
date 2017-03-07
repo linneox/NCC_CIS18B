@@ -15,7 +15,7 @@ public class ThinCrust extends Pizza {
 
     public String getDescription() {
         
-        return pizzaWrap.getDescription() + "Thin Crust $" + COST + "\n";
+        return pizzaWrap.getDescription() + "Thin Crust \t\t$" + Double.toString(COST).format("%.2f", COST) + "\n";
     }
     
     @Override

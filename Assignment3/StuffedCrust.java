@@ -15,7 +15,7 @@ public class StuffedCrust extends Pizza {
 
     @Override
     public String getDescription() {
-        return pizzaWrap.getDescription() + "Struffed Crust $" + COST + "\n";
+        return pizzaWrap.getDescription() + "Struffed Crust \t$" + Double.toString(COST).format("%.2f", COST) + "\n";
     }
 
     @Override

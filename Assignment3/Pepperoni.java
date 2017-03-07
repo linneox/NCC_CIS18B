@@ -15,7 +15,7 @@ public class Pepperoni extends Toppings {
 
     @Override
     public String getDescription() {
-        return pizzaWrap.getDescription() + "Pepperoni $" + COST + "\n";
+        return pizzaWrap.getDescription() + "Pepperoni \t\t$" + Double.toString(COST).format("%.2f", COST) + "\n";
     }
 
     @Override

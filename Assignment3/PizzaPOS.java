@@ -1,6 +1,5 @@
 package pos;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -9,67 +8,69 @@ import java.util.Scanner;
  */
 public class PizzaPOS {
 
-    // Implement way of displaying two decimal points for prices: format specifiers
     public static void main(String[] args) {
 
-        char choice = 'Y';
-        Pizza tempPizza;
-        double deliveryFee = 0.0;
-        double total;
+        char choice = 'Y';                                                      // choice, Hold user input after each menu displayed. 
+        Pizza tempPizza;                                                        // tempPizza, Holds a reference to the Pizza object as it is wrapped by its decorators. 
+        double deliveryFee = 0.0;                                               // deliveryFee, 0 if first no deilvery, 5.0 if delivery. 
+        double total;                                                           // total, used at end to display total. 
 
-        boolean pizzacomp = false;
+        while (choice != 'X') {                                                 // FIRST LOOP for DeliveryMenu
+            displayDeliveryMenu();                                              // Displays carryout or delivery option
+            choice = getChoice();                                               // Prompts user for choice, A or B
+            if (choice == 'A') {                                                // If user enters 'A', add $5 to deliveryFee
+                deliveryFee += 5.0;                                             // deliveryFee = 5.0
+            }   
 
-        while (choice != 'X') { // First Loop for DeliveryMenu
-            displayDeliveryMenu();
-            choice = getChoice();
-            if (choice == 'A') {
-                deliveryFee += 5.0;
-            }
+            while (choice != 'X') {                                             // SECOND LOOP for pizza SizeMenu
+                displaySizeMenu();                                              // Prompts user for choice, A through B
+                choice = getChoice();                                           // Choice = input
+                tempPizza = createPizza(choice);                                // tempPizza references a [size]Pizza object
 
-            while (choice != 'X') {
-                displaySizeMenu();
-                choice = getChoice();
-                tempPizza = createPizza(choice);
+                while (choice != 'X') {                                         // THIRD LOOP for pizzaCrustMenu
+                    displayCrustMenu();                                         // Display crust options 
+                    choice = getChoice();                                       // Gets user choice
+                    tempPizza = createCrust(choice, tempPizza);                 // Previous tempPizza reference wrapped by new [crust]Pizza
 
-                while (choice != 'X') {
-                    displayCrustMenu();
-                    choice = getChoice();
-                    tempPizza = createCrust(choice, tempPizza);
-
-                    while (tempPizza.getClass().getSimpleName().equals("SmallPizza")) {
-                        displayCrustMenu();
-                        choice = getChoice();
-                        tempPizza = createCrust(choice, tempPizza);
+                    while (tempPizza.getClass()                                 // If the createCrust menu returns the original reference, it means
+                            .getSimpleName().equals("SmallPizza")) {            // user entered SmallPizza and StuffedCrust (not compatible).
+                        displayCrustMenu();                                     // Re-runs CrustMenu
+                        choice = getChoice();                                   // Gets user input
+                        tempPizza = createCrust(choice, tempPizza);             // If SmallPizza and not StuffedCrust not references a Crust Object
                     }
 
-                    while (choice != 'X') {
-                        displayToppingsMenu();
-                        choice = getChoice();
-                        tempPizza = createTopping(choice, tempPizza);
+                    while (choice != 'X') {                                     // FOURTH LOOP for ToppingsMenu
+                        displayToppingsMenu();                                  // Display toppings menu
+                        choice = getChoice();                                   // Get user input
+                        tempPizza = createTopping(choice, tempPizza);           // Wrap previous reference with a new Toppings Object
 
-                        System.out.print("Add another topping[Y/N]: ");
-                        choice = getChoice();
+                        System.out.print("Add another topping[Y/N]: ");         // For multiple Toppings entry
+                        choice = getChoice();                                   // Get user input
 
-                        while (choice == 'Y') {
-                            displayToppingsMenu();
-                            choice = getChoice();
-                            tempPizza = createTopping(choice, tempPizza);
-                            System.out.print("Add another topping[Y/N]: ");
-                            choice = getChoice();
+                        while (choice == 'Y') {                                 // FIFTH RE-LOOP for extra toppings
+                            displayToppingsMenu();                              // Displays Toppings Menu
+                            choice = getChoice();                               // Get user input
+                            tempPizza = createTopping(choice, tempPizza);       // TempPizza wrapped by another toppings object
+                            System.out.print("Add another topping[Y/N]: ");     
+                            choice = getChoice();                               // Get user input
                         }
 
+                        System.out.println("\n\n******************" 
+                                + "*******************************");
                         if (deliveryFee != 0.0) {
-                            System.out.println("Delivery Fee $" + deliveryFee);
+                            System.out.println("Delivery Fee \t\t$" 
+                                    + String.format("%.2f", deliveryFee));
                         }
 
-                        System.out.println(tempPizza.getDescription());
-                        total = deliveryFee + tempPizza.cost();
-                        System.out.println("Total: $" + total);
-
-                        System.out.print("Create another pizza order[Y/N]: ");
+                        System.out.println(tempPizza.getDescription());         // Display Description of pizza
+                        total = deliveryFee + tempPizza.cost();                 // Display individual costs
+                        System.out.printf("TOTAL: $%.2f", total);              
+                        System.out.println("\n\n******************" 
+                                + "*******************************");
+                        System.out.print("\nCreate another pizza order[Y/N]: ");
                         choice = getChoice();
 
-                        if (choice == 'Y') {
+                        if (choice == 'Y') {                                    // Reset Everything
                             tempPizza = null;
                             deliveryFee = 0.0;
                             break;
@@ -163,11 +164,12 @@ public class PizzaPOS {
             pizzaCrust = new StuffedCrust(pizza);
             return pizzaCrust;
         } else if (smallPizza && choice == 'C') {
-            System.out.println("Stuffed Crust not compatible with a small pizza.\n");
+            System.out.println("Stuffed Crust not " 
+                    + " compatible with a small pizza.\n");
             return pizza;
 
         }
-        return pizzaCrust; // If all fails. 
+        return pizzaCrust; // If all fails. returns original reference, not wrapped. 
     }
 
     public static Pizza createTopping(char choice, Pizza pizza) {

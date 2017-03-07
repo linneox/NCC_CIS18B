@@ -9,7 +9,7 @@ public class MediumPizza extends Pizza {
     private final double COST = 14.0;
 
     public MediumPizza() {
-        description = "Medium Pizza $" + COST +"\n";
+        description = "Medium Pizza \t$" + Double.toString(COST).format("%.2f", COST) +"\n";
     }
 
     @Override
