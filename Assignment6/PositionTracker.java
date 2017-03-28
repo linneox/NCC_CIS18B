@@ -48,6 +48,7 @@ public class PositionTracker {
                         break; // PREVENTS UNDO ON FIRST RUN
                         }
                         previous.undo();
+                        previous = new NoCommand();
                     break;
             }
 
