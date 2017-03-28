@@ -11,7 +11,6 @@ public class PositionTracker {
 
         Scanner keyboard = new Scanner(System.in);
         Position userPosXY = new Position();
-        Position undoRef = new Position();
 
         Command up = new UpDirectionCommand(userPosXY);
         Command down = new DownDirectionCommand(userPosXY);
@@ -52,7 +51,6 @@ public class PositionTracker {
                     break;
             }
 
-            userPosXY.getCoordinates();
             System.out.println("\n\n\n\n");
 
         } while (direction != '*');
